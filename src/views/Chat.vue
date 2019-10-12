@@ -176,7 +176,7 @@
             min-height 100vh;
 
             .scroller {
-                top: 100px;
+                top: 90px;
 
                 .hight-add {
                     height: 104px;
@@ -216,14 +216,14 @@
                             margin-left 20px;
                             background #fff;
                             max-width 515px;
-                            line-height: 1.12rem;
+                            line-height: 1.10rem;
                             display: inline-block;
                             vertical-align: top;
                             position: relative;
                             text-align: left;
-                            font-size 32px;
+                            font-size 28px;
                             border-radius: 10px;
-                            padding: 25px;
+                            padding: 20px 25px;
                             word-break: break-all;
                         }
 
