@@ -13,43 +13,47 @@
         <div class="other-way">
             用手机号登陆
         </div>
-        <input type="submit" value="登陆" class="submit-input" @click="submit" :disabled="!isCanSubmit" :class="isCanSubmit?'submit-input':'submit-input disabled-input'"/>
-
+        <input type="submit" value="登陆" class="submit-input" @click="submit" :disabled="!isCanSubmit"
+               :class="isCanSubmit?'submit-input':'submit-input disabled-input'"/>
+        <account-options></account-options>
         <Message :isShowMessage="isShowMessage" :messageTip="messageTip"></Message>
     </section>
 </template>
 
 <script lang="ts">
-    import {Component,Watch, Vue} from "vue-property-decorator";
-    import RegisterApi from '../apis/Register'
+    import {Component, Watch, Vue} from "vue-property-decorator";
+    import RegisterApi from "../apis/Register";
     import AjaxResponse = Response.AjaxResponse;
-    import Message from '../components/Message.vue';
+    import Message from "../components/Message.vue";
+    import AccountOptions from "../components/AccountOptions.vue";
 
-    import { AxiosRequestConfig, Method, AxiosResponse } from 'axios'
+    import {AxiosRequestConfig, Method, AxiosResponse} from "axios";
+
     @Component({
         components: {
             Message,
+            AccountOptions,
         },
     })
     export default class Home extends Vue {
-        password: string = ''
-        phoneNumber: string = ''
+        password: string = "";
+        phoneNumber: string = "";
 
 
         isShowMessage: boolean = false;
-        messageTip: string = '';
+        messageTip: string = "";
 
         isCanSubmit: boolean = false;
 
-        registerApi: RegisterApi = new RegisterApi()
+        registerApi: RegisterApi = new RegisterApi();
 
         imgObjs: any = {
-            noSelect: require('../assets/images/login/icon-no-select.png'),
-            select: require('../assets/images/login/icon-select.png'),
-        }
+            noSelect: require("../assets/images/login/icon-no-select.png"),
+            select: require("../assets/images/login/icon-select.png"),
+        };
 
         toBack() {
-            this.$router.push('/')
+            this.$router.push("/");
         }
 
         disapperMessage() {
@@ -59,13 +63,14 @@
             }, 1.5 * 1000);
         }
 
-        @Watch('password')
+        @Watch("password")
         passwordChanged(newVal: string, oldVal: string) {
-            this.refreshSubmit()
+            this.refreshSubmit();
         }
-        @Watch('phoneNumber')
+
+        @Watch("phoneNumber")
         phoneNumberChanged(newVal: string, oldVal: string) {
-            this.refreshSubmit()
+            this.refreshSubmit();
         }
 
         submit() {
@@ -75,15 +80,15 @@
             }).then((res: any) => {
                 localStorage.setItem("userInfo", JSON.stringify(res.data));
                 this.$store.commit("setUser", res.data);
-                Vue.prototype.$socket.emit('login', res.data._id)
-                this.$router.push('/home')   
-                console.log(res)
+                Vue.prototype.$socket.emit("login", res.data._id);
+                this.$router.push("/home");
+                console.log(res);
             }).catch((res: AjaxResponse) => {
-                console.log(res)
-                this.messageTip = res.msg||'';
+                console.log(res);
+                this.messageTip = res.msg || "";
                 this.isShowMessage = false;
                 this.disapperMessage();
-            })
+            });
         }
 
         backLast() {
@@ -91,10 +96,20 @@
         }
 
         refreshSubmit() {
-            if(this.password!==''&&this.phoneNumber!=='') {
-                this.isCanSubmit = true
+            if (this.password !== "" && this.phoneNumber !== "") {
+                this.isCanSubmit = true;
             } else {
-                this.isCanSubmit = false
+                this.isCanSubmit = false;
+            }
+        }
+
+        mounted() {
+            const userInfoStr = localStorage.getItem("userInfo");
+            if (userInfoStr) {
+                console.log("刷新了界面，从缓存中获取用户信息");
+                const userInfo = JSON.parse(userInfoStr);
+                // this.password = userInfo.password;
+                this.phoneNumber = userInfo.phoneNumber;
             }
         }
 
@@ -173,6 +188,7 @@
             }
 
         }
+
         .tell-phone {
             margin-top: 80px;
         }
@@ -196,7 +212,7 @@
         }
 
         .submit-input {
-            widthHeight(705px,90px);
+            widthHeight(705px, 90px);
             line-height 90px;
             text-align center;
             border-radius 10px;
@@ -206,6 +222,7 @@
             font-size: 36px;
             display block;
         }
+
         .disabled-input {
             background noSubmitColor
             color: #b5b5b5;

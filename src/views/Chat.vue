@@ -86,13 +86,11 @@
                 this.chatContent.push(data);
                 console.log(data);
 
-                this.toBottomA();
-                console.log(data.fromId !== this.getUser._id);
-                console.log(data.fromId);
                 console.log(this.getUser._id);
                 if (String(data.fromId) !== String(this.getUser._id)) {
                     Vue.prototype.$socket.emit("seed", this.getUser._id, this.$route.params._id);
                 }
+                this.toBottomA();
             });
             this.userApi.getMessages(this.getUser._id, this.$route.params._id).then((res: any) => {
                 this.chatContent = res.data;

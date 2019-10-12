@@ -7,7 +7,7 @@ Vue.use(Router);
 export default new Router({
   routes: [
     {
-      path: '/',
+      path: '/register',
       name: 'register',
       component: Register,
     },
@@ -17,7 +17,7 @@ export default new Router({
       component: () => import('./views/Home.vue'),
     },
     {
-      path: '/login',
+      path: '/',
       name: 'login',
       component: () => import('./views/Login.vue'),
     },

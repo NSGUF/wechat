@@ -65,7 +65,7 @@
             select: require('../assets/images/login/icon-select.png'),
         }
         toLogin() {
-            this.$router.push('/login')
+            this.$router.push('/')
         }
 
 
@@ -101,7 +101,7 @@
                 password: this.password,
                 phoneNumber: this.phoneNumber,
             }).then((res: any) => {
-                this.$router.push('/login')
+                this.$router.push('/')
             }).catch((res: AjaxResponse) => {
                 console.log(res)
                 this.messageTip = res.msg||'';
