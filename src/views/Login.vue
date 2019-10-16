@@ -73,15 +73,19 @@
             this.refreshSubmit();
         }
 
+        loginSuccess(res: any) {
+            localStorage.setItem("userInfo", JSON.stringify(res.data));
+            this.$store.commit("setUser", res.data);
+            Vue.prototype.$socket.emit("login", res.data._id);
+            this.$router.push("/home");
+        }
+
         submit() {
             this.registerApi.doLogin({
                 password: this.password,
                 phoneNumber: this.phoneNumber,
             }).then((res: any) => {
-                localStorage.setItem("userInfo", JSON.stringify(res.data));
-                this.$store.commit("setUser", res.data);
-                Vue.prototype.$socket.emit("login", res.data._id);
-                this.$router.push("/home");
+                this.loginSuccess(res)
                 console.log(res);
             }).catch((res: AjaxResponse) => {
                 console.log(res);
@@ -110,6 +114,13 @@
                 const userInfo = JSON.parse(userInfoStr);
                 // this.password = userInfo.password;
                 this.phoneNumber = userInfo.phoneNumber;
+                this.registerApi.keepStatus({
+                    password: userInfo.password,
+                    phoneNumber: userInfo.phoneNumber
+                }).then((res: any) => {
+                    this.loginSuccess(res)
+                })
+                ;
             }
         }
 
