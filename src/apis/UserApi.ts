@@ -14,12 +14,14 @@ export default class UserApi extends Httpjs {
         return this.request({url: '/search/friend', method: 'post', data});
     }
 
-    getMessages(fromUserId: string, toUserId: string) {
+    getMessages(fromUserId: string, toUserId: string, page: number, pageSize: number) {
         return this.request({
             url: '/get/messages',
             data: {
                 fromUserId,
                 toUserId,
+                page,
+                pageSize,
             }
         });
     }

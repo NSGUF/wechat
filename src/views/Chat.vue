@@ -64,7 +64,12 @@
 
         userApi: UserApi = new UserApi();
 
+        hasMsgMore: boolean = true;
+        isLoading: boolean = false;
         chatContent: any[] = [];
+
+        page: number = 1;
+        pageSize: number = 15;
 
 
         backLast() {
@@ -92,17 +97,42 @@
                 }
                 this.toBottomA();
             });
-            this.userApi.getMessages(this.getUser._id, this.$route.params._id).then((res: any) => {
-                this.chatContent = res.data;
+            this.pullMessage();
+            this.toBottomA();
+        }
 
-                this.$forceUpdate();
-                this.toBottomA();
-
-            });
+        pullMessage(loaded?: any) {
+            if (this.hasMsgMore && !this.isLoading) {
+                this.isLoading = true;
+                this.userApi.getMessages(this.getUser._id, this.$route.params._id, this.page, this.pageSize).then((res: any) => {
+                    this.chatContent = [...res.data, ...this.chatContent];
+                    if (res.data.length === this.pageSize) {
+                        this.hasMsgMore = true;
+                    } else {
+                        this.hasMsgMore = false;
+                    }
+                    this.$forceUpdate();
+                    if (loaded) {
+                        loaded();
+                    }
+                    this.isLoading = false
+                });
+            } else {
+                if (!this.hasMsgMore) {
+                    console.log("没有了更多消息了");
+                } else {
+                    console.log("正在加载");
+                }
+                if (loaded) {
+                    loaded();
+                }
+            }
         }
 
         loadMoreMessage(loaded: any) {
             console.log("more");
+            this.page++;
+            this.pullMessage(loaded);
         }
 
         get myScroll() {
