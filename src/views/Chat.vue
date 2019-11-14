@@ -251,7 +251,7 @@
                             vertical-align: top;
                             position: relative;
                             text-align: left;
-                            font-size 28px;
+                            font-size 32px;
                             border-radius: 10px;
                             padding: 20px 25px;
                             word-break: break-all;
