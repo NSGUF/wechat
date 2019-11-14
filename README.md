@@ -4,7 +4,11 @@
 # 技术栈
 > vue全家桶 + ts + axios + stylus + socket.io-client
 
+
 # 后端在是wechat-server，具体可查找我的其他仓库；
+
+# 注意
+1. 使用前记得修改src/utils/config.ts中的配置；
 ```
 yarn install
 yarn run serve
