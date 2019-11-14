@@ -1,29 +1,17 @@
-# vue-app-no-history
+# webcat
+> 模仿微信做的聊天，后续会继续加功能，如果有意见或建议可以提issue，目前只做了聊天界面，添加好友，登陆注册等功能；
 
-## Project setup
+# 技术栈
+> vue全家桶 + ts + axios + stylus + socket.io-client
+
+# 后端在是wechat-server，具体可查找我的其他仓库；
 ```
 yarn install
-```
-
-### Compiles and hot-reloads for development
-```
 yarn run serve
-```
-
-### Compiles and minifies for production
-```
 yarn run build
 ```
 
-### Run your tests
-```
-yarn run test
-```
-
-### Lints and fixes files
 ```
 yarn run lint
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
